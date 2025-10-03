@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Reading Log</title>
+</head>
+<body>
+  <h1>Book Reading Log</h1>
+  <p>Open the browser console (Right-click → Inspect → Console) to see the results.</p>
+
+  <script>
+    // --- Reader Info ---
+    const readerName = "Alice"; 
+    const currentMonth = "July";
+
+    console.log(`Reader: ${readerName}`);
+    console.log(`Month: ${currentMonth}`);
+    console.log("----------------------");
+
+    // --- Book Details ---
+    const bookTitles = ["The Great Gatsby", "1984", "Pride and Prejudice"];
+    const totalPages = [180, 328, 279];
+    const pagesRead = [180, 150, 50];
+
+    // --- Functions ---
+    function calculateProgress(pagesRead, totalPages) {
+      return Math.round((pagesRead / totalPages) * 100);
+    }
+
+    function getReadingStatus(progressPercent) {
+      if (progressPercent === 100) {
+        return "Finished";
+      } else if (progressPercent >= 50) {
+        return "In Progress";
+      } else {
+        return "Just Started";
+      }
+    }
+
+    function printBookSummary(title, pagesRead, totalPages) {
+      const progress = calculateProgress(pagesRead, totalPages);
+      const status = getReadingStatus(progress);
+      console.log(`${title}: ${pagesRead}/${totalPages} pages read — ${status}`);
+    }
+
+    // --- Loop through books ---
+    for (let i = 0; i < bookTitles.length; i++) {
+      printBookSummary(bookTitles[i], pagesRead[i], totalPages[i]);
+    }
+
+    console.log("----------------------");
+
+    // --- Utility Functions ---
+    function totalPagesRead(pagesReadArray) {
+      let sum = 0;
+      for (let pages of pagesReadArray) {
+        sum += pages;
+      }
+      return sum;
+    }
+
+    function findBookWithMostPagesLeft(titlesArray, pagesReadArray, totalPagesArray) {
+      let maxLeft = -1;
+      let bookWithMostLeft = "";
+
+      for (let i = 0; i < titlesArray.length; i++) {
+        const pagesLeft = totalPagesArray[i] - pagesReadArray[i];
+        if (pagesLeft > maxLeft) {
+          maxLeft = pagesLeft;
+          bookWithMostLeft = titlesArray[i];
+        }
+      }
+      return bookWithMostLeft;
+    }
+
+    function printReadingSummary(readerName, month, pagesReadArray) {
+      const totalRead = totalPagesRead(pagesReadArray);
+      console.log(`${readerName}'s reading progress for ${month}: ${totalRead} pages read.`);
+    }
+
+    // --- Display Results ---
+    printReadingSummary(readerName, currentMonth, pagesRead);
+
+    const mostPagesLeftBook = findBookWithMostPagesLeft(bookTitles, pagesRead, totalPages);
+    console.log(`Book with the most pages left: ${mostPagesLeftBook}`);
+  </script>
+</body>
+</html>
